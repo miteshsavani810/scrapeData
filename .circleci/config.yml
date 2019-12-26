@@ -79,6 +79,7 @@ workflows:
           <<: *master-branch
 
       - Google-approval:
+          type: approval
           requires:
             - npm-init
           <<: *master-branch

@@ -27,7 +27,8 @@ test('fetch all emails form yahoo searh', async t => {
             pageSourchData = await Selector('body').innerText;
             emailsArray = await common.extractEmails(pageSourchData);
             console.log('Email address', emailsArray);
-            if (emailsArray.length === 0) foundNothingCount ++;
+            foundNothingCount = 5;;
+            if (emailsArray.length === 0) foundNothingCount++ ;
             listOfEmails = [...listOfEmails, ...emailsArray];
         }
     }catch (e) {
@@ -35,7 +36,7 @@ test('fetch all emails form yahoo searh', async t => {
     }
    console.log(listOfEmails);
 
-   const fileName = 'Data/Google_Search/Yahoo_' + await common.getTimeStamp() + '.txt';
+   const fileName = './Data/Google_Search/Yahoo_' + await common.getTimeStamp() + '.txt';
    fs.appendFileSync(fileName, listOfEmails.join('\n'));
    
 });
