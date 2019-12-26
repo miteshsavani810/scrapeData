@@ -29,6 +29,10 @@ persist-workspace: &persist-workspace
     paths:
       - scrapeData
 
+attach-workspace: &attach-workspace
+  attach_workspace:
+    at: ~/
+
 # Save node_modules dependencies
 save-dependencies-cache: &save-dependencies-cache
   save_cache:
@@ -60,11 +64,32 @@ workflows:
   # Feature/bug branch commit workflow
   commit-workflow:
     jobs:
-      - run-tests:
+      - npm-init:
+          <<: *master-branch
+
+      - yahoo-approval:
+          type: approval
+          requires:
+            - npm-init
+          <<: *master-branch
+
+      - yahoo-tests:
+          requires:
+            - yahoo-approval
+          <<: *master-branch
+
+      - Google-approval:
+          requires:
+            - npm-init
+          <<: *master-branch
+
+      - Google-Map-Search:
+          requires:
+            - Google-approval
           <<: *master-branch
 
 jobs:
-  run-tests:
+  npm-init:
     executor: testcafe-executor
     steps:
       - checkout
@@ -79,9 +104,29 @@ jobs:
 
       - *save-dependencies-cache
 
+      - *persist-workspace
+
+  yahoo-tests:
+    executor: testcafe-executor
+    steps:
+      - *attach-workspace
+
       - run:
           name: Run automation tests
           command: node node_modules/testcafe/bin/testcafe.js "chrome -incognito" tests/yahoo.js -e -u
 
       - *store-artifacts
       - *store-results
+
+  Google-Map-Search:
+    executor: testcafe-executor
+    steps:
+      - *attach-workspace
+
+      - run:
+          name: Run Google maps automation tests
+          command: node node_modules/testcafe/bin/testcafe.js "chrome -incognito" tests/searchOnGoogleMaps.js -e -u
+
+      - *store-artifacts
+      - *store-results
+
