@@ -1,0 +1,5 @@
+site:facebook.com "doctors" "pune" "@gmail.com"
+site:linkedin.com "doctors" "pune" "@gmail.com"
+site:nokari.com "doctors" "pune" "@gmail.com"
+site:linkedin.com "QA Tester" "pune" "@gmail.com"
+site:facebook.com "Software" "pune" "@gmail.com"

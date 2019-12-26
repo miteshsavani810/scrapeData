@@ -1,0 +1,15 @@
+{
+  "name": "grapdata",
+  "version": "1.0.0",
+  "description": "Grap a data from Google search results",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mitesh Savani",
+  "license": "ISC",
+  "dependencies": {
+    "exceljs": "^3.5.0",
+    "testcafe": "^1.7.1"
+  }
+}
