@@ -1,0 +1,87 @@
+version: 2.1
+
+############################################################################
+
+executors:
+  default-executor:
+    working_directory: ~/scrapeData
+    shell: /bin/bash
+    docker:
+      - image: circleci/node:11-browsers
+
+  testcafe-executor:
+    working_directory: ~/scrapeData
+    shell: /bin/bash
+    docker:
+      - image: circleci/node:13.2.0-browsers
+
+store-results: &store-results
+  store_test_results:
+    path: Data
+
+store-artifacts: &store-artifacts
+  store_artifacts:
+    path: Data
+
+persist-workspace: &persist-workspace
+  persist_to_workspace:
+    root: ~/
+    paths:
+      - scrapeData
+
+# Save node_modules dependencies
+save-dependencies-cache: &save-dependencies-cache
+  save_cache:
+    paths:
+      - node_modules
+    key: v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+
+# Download node_modules dependencies
+restore-dependencies-cache: &restore-dependencies-cache
+  restore_cache:
+    keys:
+      - v1-dependencies-{{ .Branch }}-{{ checksum "package.json" }}
+      # fallback to using the cache from the same branch
+      - v1-dependencies-{{ .Branch }}-
+      # fallback to using the latest cache if no exact match is found
+      - v1-dependencies-
+
+master-branch: &master-branch
+  filters:
+    branches:
+      only:
+        - master
+
+workflows:
+  version: 2
+
+  ######################################
+
+  # Feature/bug branch commit workflow
+  commit-workflow:
+    jobs:
+      - run-tests:
+          <<: *master-branch
+
+jobs:
+  run-tests:
+    executor: testcafe-executor
+    steps:
+      - checkout
+
+      - *restore-dependencies-cache
+
+      # Install dependencies
+      - run:
+          name: Install npm modules
+          command: npm install --no-audit
+          no_output_timeout: 15m
+
+      - *save-dependencies-cache
+
+      - run:
+          name: Run automation tests
+          command: node node_modules\testcafe\bin\testcafe.js "chrome -incognito" tests\yahoo.js -e -u
+
+      - *store-artifacts
+      - *store-results
