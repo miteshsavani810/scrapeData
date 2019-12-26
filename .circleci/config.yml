@@ -74,14 +74,14 @@ jobs:
       # Install dependencies
       - run:
           name: Install npm modules
-          command: npm install --no-fund
+          command: npm install --no-fund --no-audit
           no_output_timeout: 15m
 
       - *save-dependencies-cache
 
       - run:
           name: Run automation tests
-          command: node node_modules\testcafe\bin\testcafe.js "chrome -incognito" tests\yahoo.js -e -u
+          command: node node_modules/testcafe/bin/testcafe.js "chrome -incognito" tests/yahoo.js -e -u
 
       - *store-artifacts
       - *store-results
