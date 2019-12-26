@@ -17,4 +17,5 @@ class Common {
     }
 }
 
+export const path = require('path');
 export let common = new Common();

@@ -1,5 +1,5 @@
 import { Selector, t } from 'testcafe';
-import { common } from '../utils/common'
+import { common, path } from '../utils/common'
 
 const fs = require('fs');
 fixture `Grap a emails from Yahoo`
@@ -36,7 +36,7 @@ test('fetch all emails form yahoo searh', async t => {
     }
    console.log(listOfEmails);
 
-   const fileName = './Data/Google_Search/Yahoo_' + await common.getTimeStamp() + '.txt';
+   const fileName = path.join(__dirname, '../Data/Google_Search/Yahoo_' + await common.getTimeStamp() + '.txt');
    fs.appendFileSync(fileName, listOfEmails.join('\n'));
    
 });
