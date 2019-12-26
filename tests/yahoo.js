@@ -26,6 +26,7 @@ test('fetch all emails form yahoo searh', async t => {
             await t.click(nextPage).wait(5000);
             pageSourchData = await Selector('body').innerText;
             emailsArray = await common.extractEmails(pageSourchData);
+            console.log('EMial address', emailsArray);
             if (emailsArray.length === 0) foundNothingCount ++;
             listOfEmails = [...listOfEmails, ...emailsArray];
         }

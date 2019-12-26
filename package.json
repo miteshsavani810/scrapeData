@@ -9,7 +9,6 @@
   "author": "Mitesh Savani",
   "license": "ISC",
   "dependencies": {
-    "exceljs": "^3.5.0",
     "testcafe": "^1.7.1"
   }
 }
