@@ -74,7 +74,7 @@ jobs:
       # Install dependencies
       - run:
           name: Install npm modules
-          command: npm install
+          command: npm install --no-fund
           no_output_timeout: 15m
 
       - *save-dependencies-cache
