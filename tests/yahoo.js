@@ -26,7 +26,7 @@ test('fetch all emails form yahoo searh', async t => {
             await t.click(nextPage).wait(5000);
             pageSourchData = await Selector('body').innerText;
             emailsArray = await common.extractEmails(pageSourchData);
-            console.log('Email address', emailsArray);
+            //console.log('Email address', emailsArray);
             foundNothingCount = 5;;
             if (emailsArray.length === 0) foundNothingCount++ ;
             listOfEmails = [...listOfEmails, ...emailsArray];
@@ -37,6 +37,15 @@ test('fetch all emails form yahoo searh', async t => {
    console.log(listOfEmails);
 
    const fileName = path.join(__dirname, '../Data/Google_Search/Yahoo_' + await common.getTimeStamp() + '.txt');
-   fs.appendFileSync(fileName, listOfEmails.join('\n'));
+   //fs.appendFileSync(fileName, listOfEmails.join('\n'));
+   await addContentInFile(fileName, listOfEmails.join('\n'));
    
 });
+
+async function addContentInFile(file, data) {
+	fs.writeFileSync(file, data, (error) => {
+		if (error) {
+			return console.log(error);
+		}
+	});
+}
