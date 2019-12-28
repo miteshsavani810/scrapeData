@@ -67,18 +67,18 @@ workflows:
       - npm-init:
           <<: *master-branch
 
-      - yahoo-approval:
+      - google-approval:
           type: approval
           requires:
             - npm-init
           <<: *master-branch
 
-      - yahoo-tests:
+      - google-tests:
           requires:
-            - yahoo-approval
+            - google-approval
           <<: *master-branch
 
-      - Google-approval:
+      - Google-Map-approval:
           type: approval
           requires:
             - npm-init
@@ -86,7 +86,7 @@ workflows:
 
       - Google-Map-Search:
           requires:
-            - Google-approval
+            - Google-Map-approval
           <<: *master-branch
 
 jobs:
@@ -107,14 +107,14 @@ jobs:
 
       - *persist-workspace
 
-  yahoo-tests:
+  google-tests:
     executor: testcafe-executor
     steps:
       - *attach-workspace
 
       - run:
           name: Run automation tests
-          command: node node_modules/testcafe/bin/testcafe.js "chrome -incognito" tests/yahoo.js -e -u
+          command: node node_modules/testcafe/bin/testcafe.js "chrome -incognito" -c 8 tests/google.js -e -u
 
       - *store-artifacts
       - *store-results
@@ -126,7 +126,7 @@ jobs:
 
       - run:
           name: Run Google maps automation tests
-          command: node node_modules/testcafe/bin/testcafe.js "chrome -incognito" tests/searchOnGoogleMaps.js -e -u
+          command: node node_modules/testcafe/bin/testcafe.js "chrome -incognito" -c 8 tests/searchOnGoogleMaps.js -e -u
 
       - *store-artifacts
       - *store-results
