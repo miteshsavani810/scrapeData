@@ -1,0 +1,18 @@
+[
+    { 
+        "searchName": "pune doctors from linkedin",
+        "searchString": "site:linkedin.com \"doctors\" \"pune\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "pune doctors from nokari",
+        "searchString": "site:naukri.com \"doctors\" \"pune\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "pune QA tester from linkedin",
+        "searchString": "site:linkedin.com \"QA Tester\" \"pune\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "pune Software engineer from linkedin",
+        "searchString": "site:linkedin.com \"Software engineer\" \"pune\" \"@gmail.com\""
+    }
+]

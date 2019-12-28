@@ -1,42 +1,31 @@
-import { Selector, t } from 'testcafe';
-import { common } from '../utils/common'
+import { t } from 'testcafe';
+import { common } from '../utils/common';
+import { elements } from '../Pages/elements';
 
-const fs = require('fs');
 fixture`Grap a data from Google maps`
-    .page`https://www.google.com/maps/search/surat+dental/@21.2000848,72.7744555,13z`;
+    .page`https://www.google.com`;
 
-test('fetch all name and address form google maps', async t => {
-    const SearchInput = await Selector('input[aria-label="Search Google Maps"]');
+test('Search and store all available details from google maps', async t => {
+    
+    let SearchUrl = `https://www.google.com/maps/search/surat+dental/@21.2000848,72.7744555,13z`;
+    const fileName = await common.getFullFilePath(await common.getUniqueFileName('Dental Clinic In Surat'));
 
-    const searchString = `surat Dental`;
+    await t.navigateTo(SearchUrl);
+    await t.maximizeWindow();
 
     console.log('wait for 10 sec');
     await t.wait(10000);
     console.log('end of wailt 10 sec');
-    await t.maximizeWindow();
-    //await t.typeText(SearchInput, searchString).wait(10000);
-   /*  do {
-        await t.hover(Selector('button.searchbox-searchbutton'));
-        await t.click(Selector('button.searchbox-searchbutton')).wait(8000);
-    } while (!await Selector('div.section-result').exists);
-    */ //await t.click(Selector('button.searchbox-searchbutton')).wait(1000);
-    //await t.debug();
+    
 
-    let clinicData = {
-        name: null,
-        address: null,
-        phone: null
-    };
-
-    const fileName = 'Dental Clinic In Surat ' + await common.getTimeStamp() + '.txt';
     let isNextPageHasData = false;
+    let noOfPageToNavigate = 1;
     do {
         isNextPageHasData = false;
-        let data = await iterateAllResultItem(fileName);
-        let nextPageButton = Selector(`span[class*='button-next-icon']`).parent('button');
-        let nextPageButtonEnabled = !(await Selector(`//span[contains(@class,'button-next-icon')]`).parent('button').filter((node,idx) => {
-            return node.classNames.indexOf('disabled') > 1;
-        }));
+        await iterateAllResultItem(fileName);
+        let nextPageButton = elements.googleMaps.result_Next_Page;
+
+
         console.log('is visible');
         console.log(await nextPageButton.visible);
         if (await nextPageButton.visible) {
@@ -44,39 +33,27 @@ test('fetch all name and address form google maps', async t => {
             await t.click(nextPageButton).wait(8000);
             isNextPageHasData = true;
         }
-    } while (isNextPageHasData)
+        noOfPageToNavigate --;
+    } while (isNextPageHasData && noOfPageToNavigate > 0)
 
 });
 
 
 async function iterateAllResultItem(fileName) {
-    let searchResultItems = Selector('div.section-result');
+    let searchResultItems = elements.googleMaps.result_Panel;
     console.log(await searchResultItems.count);
+    let resultItemCount = 1 || await searchResultItems.count
 
-    let clinicDataArray = [];
-    for (let i = 0; i < await searchResultItems.count; i++) {
+    for (let i = 0; i <resultItemCount; i++) {
         await t.click(searchResultItems.nth(i)).wait(3000);
-        let titleLocator = await Selector('h1');
-        let addressLocator = await Selector('span[aria-label="Address"]').sibling('span.section-info-text');
-        let phoneLocator = await Selector('span[aria-label="Phone"][class="section-info-icon"]').sibling(`span.section-info-text`).find(`span[role="text"][class="widget-pane-link"]`);
 
-        let title = await titleLocator.exists ? await titleLocator.innerText : '' ;
-        let address = await addressLocator.exists ? await addressLocator.innerText : '';
-        let phone = await phoneLocator.exists ? await phoneLocator.innerText : '';
-
-        console.log('title', title);
-        console.log('address', address);
-        console.log('phone', phone);
         let obj = {
-            name: title,
-            address: address,
-            phone: phone
+            Name: await common.getInnerText(elements.googleMaps.result_Title),
+            Address: await common.getInnerText(elements.googleMaps.result_Address),
+            Phone: await common.getInnerText(elements.googleMaps.result_Phone),
         };
-        clinicDataArray.push(obj);
-        fs.appendFileSync(fileName, JSON.stringify(obj));
-        await t.click(Selector('span').withText('Back to results')).wait(3000);
+        await common.addContentInFile(fileName, JSON.stringify(obj));
+        await t.click(elements.googleMaps.back_To_Result).wait(3000);
     }
-
-    return clinicDataArray;
 }
 
