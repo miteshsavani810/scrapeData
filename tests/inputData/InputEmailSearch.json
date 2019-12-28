@@ -12,6 +12,46 @@
         "searchString": "site:linkedin.com \"QA Tester\" \"pune\" \"@gmail.com\""
     },
     { 
+        "searchName": "mumbai QA tester from linkedin",
+        "searchString": "site:linkedin.com \"QA Tester\" \"mumbai\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "ahmedabad QA tester from linkedin",
+        "searchString": "site:linkedin.com \"QA Tester\" \"ahmedabad\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "hyderabad QA tester from linkedin",
+        "searchString": "site:linkedin.com \"QA Tester\" \"hyderabad\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "hyderabad software developer from linkedin",
+        "searchString": "site:linkedin.com \"software developer\" \"hyderabad\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "pune software developer from linkedin",
+        "searchString": "site:linkedin.com \"software developer\" \"pune\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "mumbai software developer from linkedin",
+        "searchString": "site:linkedin.com \"software developer\" \"mumbai\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "ahmedabad software developer from linkedin",
+        "searchString": "site:linkedin.com \"software developer\" \"ahmedabad\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "mumbai HR executive from linkedin",
+        "searchString": "site:linkedin.com \"software developer\" \"mumbai\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "pune HR executive from linkedin",
+        "searchString": "site:linkedin.com \"software developer\" \"pune\" \"@gmail.com\""
+    },
+    { 
+        "searchName": "ahmedabad HR executive from linkedin",
+        "searchString": "site:linkedin.com \"software developer\" \"ahmedabad\" \"@gmail.com\""
+    },
+    { 
         "searchName": "pune Software engineer from linkedin",
         "searchString": "site:linkedin.com \"Software engineer\" \"pune\" \"@gmail.com\""
     }
