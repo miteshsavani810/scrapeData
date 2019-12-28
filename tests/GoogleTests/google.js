@@ -3,19 +3,21 @@ import { common,path } from '../../utils/common';
 import { elements } from '../../Pages/elements';
 
 const dataSet = require(path.join(__dirname, '../inputData/InputEmailSearch.json'));
+let index = 1;
 
 fixture`Grap a emails from Google`
     .page`http://www.google.com`;
 
 
-dataSet.forEach(data, index => {
+dataSet.forEach(data => {
+    data.index = index;
     test(`AAAA ${index} emails for '${data.searchName}' from google`, async t => {
-        const fileName = await common.getFullFilePath(`G_${index}_${data.searchName}.txt`);
-    
+        const fileName = await common.getFullFilePath(`G_${data.index}_${data.searchName}.txt`);
         await searchAndFetchData(`${data.searchString}`, fileName);
         //console.log(`\n\nData of ${data.searchName} is store in File: \n`, fileName);
     
     });
+    index = index + 1;
 });
 
 
