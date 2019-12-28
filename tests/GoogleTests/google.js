@@ -1,8 +1,8 @@
 import { Selector, t } from 'testcafe';
-import { common,path } from '../utils/common';
-import { elements } from '../Pages/elements';
+import { common,path } from '../../utils/common';
+import { elements } from '../../Pages/elements';
 
-const dataSet = require(path.join(__dirname, './inputData/InputEmailSearch.json'));
+const dataSet = require(path.join(__dirname, '../inputData/InputEmailSearch.json'));
 
 fixture`Grap a emails from Google`
     .page`http://www.google.com`;
