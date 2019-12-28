@@ -117,7 +117,7 @@ jobs:
           name: Run automation tests
           command: |
             TESTFILES=$(circleci tests glob "tests/GoogleTests/google.js" | circleci tests split)
-            node node_modules/testcafe/bin/testcafe.js "chrome -incognito" -c 8 ${TESTFILES} -e -u
+            node node_modules/testcafe/bin/testcafe.js "chrome -incognito" -e -u -c 8 ${TESTFILES} -T "AAAA"
 
       - *store-artifacts
       - *store-results
