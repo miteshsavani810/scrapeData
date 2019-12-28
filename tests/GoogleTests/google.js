@@ -13,7 +13,7 @@ dataSet.forEach(data => {
     data.index = index;
     test(`AAAA ${index} emails for '${data.searchName}' from google`, async t => {
         const fileName = await common.getFullFilePath(`G_${data.index}_${data.searchName}.txt`);
-        await searchAndFetchData(`${data.searchString}`, fileName);
+       // await searchAndFetchData(`${data.searchString}`, fileName);
         //console.log(`\n\nData of ${data.searchName} is store in File: \n`, fileName);
     
     });
