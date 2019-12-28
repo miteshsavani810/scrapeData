@@ -8,12 +8,12 @@ fixture`Grap a emails from Google`
     .page`http://www.google.com`;
 
 
-dataSet.forEach(data => {
-    test(`AAAA fetch all emails for '${data.searchName}' from google`, async t => {
-        const fileName = await common.getFullFilePath(await common.getUniqueFileName(`Google_${data.searchName}`));
+dataSet.forEach(data, index => {
+    test(`AAAA ${index} emails for '${data.searchName}' from google`, async t => {
+        const fileName = await common.getFullFilePath(`G_${index}_${data.searchName}.txt`);
     
         await searchAndFetchData(`${data.searchString}`, fileName);
-        console.log(`\n\nData of ${data.searchName} is store in File: \n`, fileName);
+        //console.log(`\n\nData of ${data.searchName} is store in File: \n`, fileName);
     
     });
 });
