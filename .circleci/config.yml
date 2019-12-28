@@ -109,12 +109,15 @@ jobs:
 
   google-tests:
     executor: testcafe-executor
+    parallelism: 2
     steps:
       - *attach-workspace
 
       - run:
           name: Run automation tests
-          command: node node_modules/testcafe/bin/testcafe.js "chrome -incognito" -c 8 tests/google.js -e -u
+          command: |
+            TESTFILES=$(circleci tests glob "tests/google.js" | circleci tests split)
+            node node_modules/testcafe/bin/testcafe.js "chrome -incognito" -c 8 ${TESTFILES} -e -u
 
       - *store-artifacts
       - *store-results
