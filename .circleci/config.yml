@@ -67,15 +67,9 @@ workflows:
       - npm-init:
           <<: *master-branch
 
-      - google-approval:
-          type: approval
-          requires:
-            - npm-init
-          <<: *master-branch
-
       - google-tests:
           requires:
-            - google-approval
+            - npm-init
           <<: *master-branch
 
       - Google-Map-approval:
@@ -117,7 +111,7 @@ jobs:
           name: Run automation tests
           command: |
             TESTFILES=$(circleci tests glob "tests/GoogleTests/google.js" | circleci tests split --split-by=timings)
-            node node_modules/testcafe/bin/testcafe.js "chrome -incognito" -e -u -c 8 ${TESTFILES} -T "AAAA" -S -s Data/screenshots -r xunit:Data/result.xml
+            node node_modules/testcafe/bin/testcafe.js "chrome -incognito" -e -u -c 8 ${TESTFILES} -T "AAAA" -S -s Data/screenshots -r xunit:Data/testcafe/result.xml
 
       - *store-artifacts
       - *store-results
